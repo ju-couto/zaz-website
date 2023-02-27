@@ -1,5 +1,5 @@
 import { SectionMusic } from "./style";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Title } from "../../styles/global";
 import { BsFillPlayFill, BsPauseFill } from "react-icons/bs";
 import zaz from "../../assets/zaz-music.png";
@@ -7,7 +7,7 @@ import { getTopTracks } from "../../lib/axios";
 
 export function Music() {
     const [musicData, setMusicData] = useState<Music[]>([])
-    const audioRef = useRef<HTMLAudioElement>(null)
+
     const [isPlaying, setIsPlaying] = useState(false)
     const musics = [
         {
@@ -44,15 +44,10 @@ export function Music() {
         }
         fetchData()
     }, [])
-    function handleMusic() {
-        const audio = audioRef.current
-        console.log(audio)
-        if (audio) {
-            isPlaying ? audio?.pause() : audio?.play()
-            setIsPlaying(!isPlaying)
-
-        }
-
+    function handleMusic(name: string) {
+        const audio = document.getElementById(name) as HTMLAudioElement;
+        { isPlaying ? audio?.pause() : audio?.play() }
+        setIsPlaying(!isPlaying)
     }
     return (
         <SectionMusic>
@@ -72,11 +67,11 @@ export function Music() {
                                         key={music.id}
                                     >
                                         <BsFillPlayFill
-                                            onClick={handleMusic}
-                                        >
-                                            <audio ref={audioRef}  
+                                            onClick={() => handleMusic(music.name)}
+                                        />
+                                        <audio id={music.name}
                                             src={music.preview_url} />
-                                        </BsFillPlayFill>
+
                                         <BsPauseFill />
                                     </div>
                                 </li>
@@ -86,25 +81,6 @@ export function Music() {
                         )
                     })}
 
-                    {/* // {musics.map((music, _) => {
-                    //     return (
-                    //         <Fragment
-                    //             key={music.id}
-                    //         > <li>
-                    //                 <p>{music.name}</p>
-                    //                 <div
-                    //                     key={music.id}
-                    //                 >
-                    //                     <BsFillPlayFill />
-                    //                     <BsPauseFill />
-                    //                 </div>
-
-                    //             </li>
-                    //             {music.id < 5 && <hr />}
-                    //         </Fragment>
-
-                    //     )
-                    // })} */}
 
                 </ul>
             </div>

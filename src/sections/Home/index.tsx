@@ -29,9 +29,9 @@ export function Home() {
         fetchData();
     }, []);
 
-    function handleMouse() {
-        const audio = document.querySelector("audio");
-        setIsPlaying(!isPlaying);
+     function handleMouse() {
+        const audio=  document.getElementById(trackData.name) as HTMLAudioElement;
+         setIsPlaying(!isPlaying);
         { isPlaying ? audio?.pause() : audio?.play() }
 
     }
@@ -48,7 +48,7 @@ export function Home() {
                 <DiscLayer>
                     {albumData.images.length > 0 && <img src={albumData.images[0].url} alt={"Cover"} />}
                 </DiscLayer>
-               <audio src="a"></audio>
+               <audio id={trackData.name}  src={trackData.preview_url}></audio>
 
             
             </Disc>
