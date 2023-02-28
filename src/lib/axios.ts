@@ -57,3 +57,13 @@ export async function getTopTracks() {
 
   return topTracks;
 }
+
+export async function getShows () {
+  const ZazId = await getArtist(),
+    data = await get(
+      `https://api.spotify.com/v1/artists/${ZazId}/shows?market=FR`
+    ),
+    shows = data.items.slice(0, 4);
+
+  return shows;
+}

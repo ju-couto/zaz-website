@@ -1,5 +1,5 @@
 import { SectionMusic } from "./style";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
 import { Title } from "../../styles/global";
 import { BsFillPlayFill, BsPauseFill } from "react-icons/bs";
 import zaz from "../../assets/zaz-music.png";
@@ -7,30 +7,9 @@ import { getTopTracks } from "../../lib/axios";
 
 export function Music() {
     const [musicData, setMusicData] = useState<Music[]>([])
+    const currentAudio = useRef<HTMLAudioElement>(null)
 
-    const [isPlaying, setIsPlaying] = useState(false)
-    const musics = [
-        {
-            id: 1,
-            name: "Music 1"
-        },
-        {
-            id: 2,
-            name: "Music 2"
-        },
-        {
-            id: 3,
-            name: "Music 3"
-        },
-        {
-            id: 4,
-            name: "Music 4"
-        },
-        {
-            id: 5,
-            name: "Music 5"
-        }
-    ]
+    const [isPlaying, setIsPlaying] = useState<{ [key: string]: string }>({})
     interface Music {
         id: string,
         name: string,
@@ -41,13 +20,35 @@ export function Music() {
             const topTracks = await getTopTracks()
             setMusicData(topTracks)
             console.log(topTracks)
+
         }
         fetchData()
     }, [])
-    function handleMusic(name: string) {
-        const audio = document.getElementById(name) as HTMLAudioElement;
-        { isPlaying ? audio?.pause() : audio?.play() }
-        setIsPlaying(!isPlaying)
+
+    useEffect(() => {
+        if(isPlaying) {
+            const audio = currentAudio.current
+            const currentTrack = Object.keys(isPlaying)[0]
+            const currentTrackUrl = isPlaying[currentTrack]
+            if (currentTrackUrl) {
+                audio?.pause()
+                audio?.setAttribute('src', currentTrackUrl)
+                audio?.play()
+            }
+        }        
+      
+    }, [isPlaying])
+
+    function handleMusic(preview_url: string, name: string) {
+        setIsPlaying({[name] : preview_url })
+        console.log(isPlaying)
+      
+
+    }
+    function pauseMusic() {
+        const audio = currentAudio.current
+        audio?.pause()
+        setIsPlaying({})
     }
     return (
         <SectionMusic>
@@ -56,6 +57,8 @@ export function Music() {
                 <img src={zaz} alt=""
                 />
                 <ul>
+                    <audio ref={currentAudio}
+                        src="" />
                     {musicData.map((music, i) => {
 
                         return (
@@ -66,13 +69,21 @@ export function Music() {
                                     <div
                                         key={music.id}
                                     >
-                                        <BsFillPlayFill
-                                            onClick={() => handleMusic(music.name)}
-                                        />
-                                        <audio id={music.name}
-                                            src={music.preview_url} />
+                                        {isPlaying[music.name] ? <BsPauseFill
+                                            onClick={pauseMusic}
+                                        /> : <BsFillPlayFill
+                                            onClick={() => handleMusic(music.preview_url, music.name)}
+                                        />}
+                                        {/* {
+                                            isPlaying ?
+                                                
+                                                :
+                                               
+                                        } */}
 
-                                        <BsPauseFill />
+
+
+
                                     </div>
                                 </li>
                                 {i < 5 && <hr />}
