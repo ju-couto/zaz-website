@@ -19,14 +19,12 @@ export function Music() {
         const fetchData = async () => {
             const topTracks = await getTopTracks()
             setMusicData(topTracks)
-            console.log(topTracks)
-
         }
         fetchData()
     }, [])
 
     useEffect(() => {
-        if(isPlaying) {
+        if (isPlaying) {
             const audio = currentAudio.current
             const currentTrack = Object.keys(isPlaying)[0]
             const currentTrackUrl = isPlaying[currentTrack]
@@ -35,19 +33,20 @@ export function Music() {
                 audio?.setAttribute('src', currentTrackUrl)
                 audio?.play()
             }
-        }        
-      
+        }
+
     }, [isPlaying])
 
-    function handleMusic(preview_url: string, name: string) {
-        setIsPlaying({[name] : preview_url })
+    function playMusic(preview_url: string, name: string) {
+        setIsPlaying({ [name]: preview_url })
         console.log(isPlaying)
-      
-
     }
     function pauseMusic() {
         const audio = currentAudio.current
         audio?.pause()
+        setIsPlaying({})
+    }
+    function musicEnded() {
         setIsPlaying({})
     }
     return (
@@ -58,7 +57,9 @@ export function Music() {
                 />
                 <ul>
                     <audio ref={currentAudio}
-                        src="" />
+                        src=""
+                        onEnded={musicEnded}
+                    />
                     {musicData.map((music, i) => {
 
                         return (
@@ -72,7 +73,7 @@ export function Music() {
                                         {isPlaying[music.name] ? <BsPauseFill
                                             onClick={pauseMusic}
                                         /> : <BsFillPlayFill
-                                            onClick={() => handleMusic(music.preview_url, music.name)}
+                                            onClick={() => playMusic(music.preview_url, music.name)}
                                         />}
                                         {/* {
                                             isPlaying ?

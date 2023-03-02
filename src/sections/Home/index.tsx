@@ -3,7 +3,7 @@ import { HomeSection, Vynil, DiscLayer, Disc } from "./style";
 import imgDisc from "../../assets/disc.png";
 import { getRandomTrack } from "../../lib/axios";
 import { getLastAlbum } from "../../lib/axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface AlbumData {
     images: { url: string }[];
@@ -12,8 +12,10 @@ interface TrackData {
     name: string;
     preview_url: string;
 }
+
 export function Home() {
     const [albumData, setAlbumData] = useState<AlbumData>({ images: [] }),
+        currentAudio = useRef<HTMLAudioElement>(null),
         [trackData, setTrackData] = useState<TrackData>({ name: "", preview_url: "" }),
         [isPlaying, setIsPlaying] = useState(false)
 
@@ -21,7 +23,7 @@ export function Home() {
         const fetchData = async () => {
             const albumData = await getLastAlbum(),
                 trackData = await getRandomTrack();
-                console.log(trackData)
+
             setAlbumData(albumData);
             setTrackData(trackData);
         };
@@ -29,9 +31,9 @@ export function Home() {
         fetchData();
     }, []);
 
-     function handleMouse() {
-        const audio=  document.getElementById(trackData.name) as HTMLAudioElement;
-         setIsPlaying(!isPlaying);
+    function handleMouse() {
+        const audio = currentAudio.current
+        setIsPlaying(!isPlaying)
         { isPlaying ? audio?.pause() : audio?.play() }
 
     }
@@ -48,10 +50,11 @@ export function Home() {
                 <DiscLayer>
                     {albumData.images.length > 0 && <img src={albumData.images[0].url} alt={"Cover"} />}
                 </DiscLayer>
-               <audio id={trackData.name}  src={trackData.preview_url}></audio>
+                <audio ref={currentAudio} src={trackData.preview_url}></audio>
 
-            
+
             </Disc>
         </HomeSection>
     )
 }
+
