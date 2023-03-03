@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState, useRef } from "react";
 import { Title } from "../../styles/global";
 import { BsFillPlayFill, BsPauseFill } from "react-icons/bs";
 import zaz from "../../assets/zaz-music.png";
-import { getTopTracks } from "../../lib/axios";
+import { getTopTracks } from "../../lib/tracks";
 
 export function Music() {
     const [musicData, setMusicData] = useState<Music[]>([])
@@ -75,25 +75,13 @@ export function Music() {
                                         /> : <BsFillPlayFill
                                             onClick={() => playMusic(music.preview_url, music.name)}
                                         />}
-                                        {/* {
-                                            isPlaying ?
-                                                
-                                                :
-                                               
-                                        } */}
-
-
-
 
                                     </div>
                                 </li>
                                 {i < 5 && <hr />}
-
                             </Fragment>
                         )
                     })}
-
-
                 </ul>
             </div>
         </SectionMusic>

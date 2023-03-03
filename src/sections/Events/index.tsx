@@ -1,7 +1,8 @@
 import { EventDay, EventsGrid, EventsSection, EventInfo,  ButtonEvents} from "./style";
 import { Title } from "../../styles/global";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "../../components/Modal";
+import { Concerts } from "../../utils";
 
 
 export function Events() {
@@ -9,7 +10,13 @@ export function Events() {
     function handleOpenModal() {
         setIsOpen(!IsOpen)
     }
-    const events = [
+    useEffect(() => {
+        
+
+    }, [])
+
+
+    const shows = [
         {
             id: 1,
             title: 'Event 1',
@@ -46,26 +53,28 @@ export function Events() {
             <Title>Events</Title>
             <EventsGrid>
     
-            {events.map(event => (
-                <div key={event.id}>
-                    <EventDay>
-                        {event.date.getDate()}
-                        <p>{
-                            event.date.toLocaleString('pt-BR', { month: 'short' })
-                            }</p>
-                    </EventDay>
-                    <EventInfo>
-                        <h2>{event.title}</h2>
-                        <p>{event.location}</p>
-                        <button
-                            onClick={handleOpenModal}
-                            
-                        >
-                            Mais informações
-                        </button>
-                    </EventInfo>
-                </div>
-            ))}
+            {Concerts.map(event => {
+                    if(event.id <= 4){
+                        return(<div key={event.id}>
+                            <EventDay>
+                                {event.date.getDate()}
+                                <p>{
+                                    event.date.toLocaleString('pt-BR', { month: 'short' })
+                                    }</p>
+                            </EventDay>
+                            <EventInfo>
+                                <h2>{event.name}</h2>
+                                <p>{event.location}</p>
+                                <button
+                                    onClick={handleOpenModal}
+                                    
+                                >
+                                    Mais informações
+                                </button>
+                            </EventInfo>
+                        </div>)
+                    }
+               })}
               
             {IsOpen && <Modal
                 position="absolute"

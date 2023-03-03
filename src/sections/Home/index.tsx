@@ -1,8 +1,8 @@
 
 import { HomeSection, Vynil, DiscLayer, Disc } from "./style";
 import imgDisc from "../../assets/disc.png";
-import { getRandomTrack } from "../../lib/axios";
-import { getLastAlbum } from "../../lib/axios";
+import { getRandomTrack } from "../../lib/tracks";
+import { getLastAlbum } from "../../lib/album";
 import { useEffect, useRef, useState } from "react";
 
 interface AlbumData {
