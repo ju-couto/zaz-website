@@ -1,5 +1,6 @@
 import { AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from 'react-icons/ai'
 import logo from '../../assets/logo.svg'
+import {Link} from 'react-router-dom' 
 import { ItemsNav, Menu, Navbar, SocialMedia } from './style'
 
 
@@ -25,11 +26,11 @@ const menuItems = [
     },
     {
         name: 'Music',
-        link: '/music'
+        link: '/#music'
     },
     {
         name: 'Events',
-        link: '/events'
+        link: '/#events'
     },
     {
         name: 'Contact',
@@ -43,7 +44,6 @@ export function Header() {
 
         <Navbar>
             <div
-                
             >
                 <img src={logo} alt="Zaz logo" />
             </div>
@@ -60,15 +60,26 @@ export function Header() {
                     })}
                 </SocialMedia>
                 <Menu>
+                  
+                   {/* <li>
+                    <Link to="/">Home</Link>
+                   </li>
+                    <li><a href="/music">Music</a></li>
+                    <li><a href="/#events">Events</a></li>
+                    <li>
+                    <Link to="/#contact">Contact</Link>
+                    </li>
+{/*                      */}
                     {menuItems.map((item, key) => {
                         return (
                             <li
                                 key={key}
                             >
-                                {item.name}
+                                <a href={item.link}>{item.name}
+                                    </a>
                             </li>
                         )
-                    })}
+                    })} 
                 </Menu>
             </ItemsNav>
 

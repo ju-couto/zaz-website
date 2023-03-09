@@ -2,7 +2,7 @@ import { EventDay, EventsGrid, EventsSection, EventInfo,  ButtonEvents} from "./
 import { Title } from "../../styles/global";
 import { useEffect, useState } from "react";
 import { Modal } from "../../components/Modal";
-import { Concerts } from "../../utils";
+import { Concerts } from "../../utils/mockTracks";
 
 
 export function Events() {
@@ -16,39 +16,10 @@ export function Events() {
     }, [])
 
 
-    const shows = [
-        {
-            id: 1,
-            title: 'Event 1',
-            date: new Date(2021, 2, 1),
-            location: 'Rio de Janeiro, BR',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris.'
-        },
-        {
-            id: 2,
-            title: 'Event 2',
-            date: new Date(2021, 2, 1),
-            location: 'Rio de Janeiro, BR',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris.'
-        },
-        {
-            id: 3,
-            title: 'Event 3',
-            date: new Date(2021, 0, 3),
-            location: 'Rio de Janeiro, BR',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris.'
-        },
-        {
-            id: 4,
-            title: 'Event 4',
-            date: new Date(2021, 2, 1),
-            location: 'Rio de Janeiro, BR',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, vitae ultricies nisl nunc vel mauris.'
-        }
-
-    ]
     return (
-        <EventsSection>
+        <EventsSection
+        
+        id="events">
             
             <Title>Events</Title>
             <EventsGrid>
@@ -82,7 +53,13 @@ export function Events() {
                }
             
             </EventsGrid>
-            <ButtonEvents>
+            <ButtonEvents
+                onClick={
+                    () => {
+                        window.location.href = '/calendar'
+                    }
+                }
+            >
                 Veja mais
             </ButtonEvents>
 

@@ -2,12 +2,16 @@ import styled from "styled-components";
 
 export const Navbar = styled.nav`
   display: flex;
-  background-color: #F6CCA2 ;
+  background-color: #f6cca2;
   justify-content: space-between;
   padding: 1.5em;
   font-family: "Sawarabi Mincho", sans-serif;
   img {
     width: 5em;
+  }
+  a {
+    text-decoration: none;
+    color: #000;
   }
 `;
 export const ItemsNav = styled.div`

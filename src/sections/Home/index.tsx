@@ -3,7 +3,7 @@ import { HomeSection, Vynil, DiscLayer, Disc } from "./style";
 import imgDisc from "../../assets/disc.png";
 import { getRandomTrack } from "../../lib/tracks";
 import { getLastAlbum } from "../../lib/album";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface AlbumData {
     images: { url: string }[];
@@ -13,12 +13,15 @@ interface TrackData {
     preview_url: string;
 }
 
-export function Home() {
+interface HomeProps {
+    isPlaying: string | null;
+    playMusic: (preview_url: string) => void;
+    pauseMusic: () => void;
+}
+export function Home({ isPlaying, playMusic, pauseMusic }: HomeProps) {
     const [albumData, setAlbumData] = useState<AlbumData>({ images: [] }),
-        currentAudio = useRef<HTMLAudioElement>(null),
-        [trackData, setTrackData] = useState<TrackData>({ name: "", preview_url: "" }),
-        [isPlaying, setIsPlaying] = useState(false)
-
+        [trackData, setTrackData] = useState<TrackData>({ name: "", preview_url: "" })
+        
     useEffect(() => {
         const fetchData = async () => {
             const albumData = await getLastAlbum(),
@@ -32,9 +35,12 @@ export function Home() {
     }, []);
 
     function handleMouse() {
-        const audio = currentAudio.current
-        setIsPlaying(!isPlaying)
-        { isPlaying ? audio?.pause() : audio?.play() }
+      if(isPlaying!= trackData.preview_url){
+        pauseMusic()
+        playMusic(trackData.preview_url)
+      } else {
+            playMusic(trackData.preview_url)
+      }
 
     }
 
@@ -42,7 +48,7 @@ export function Home() {
         <HomeSection>
             <Disc
                 onMouseEnter={handleMouse}
-                onMouseLeave={handleMouse}
+                onMouseLeave={pauseMusic}
             >
                 <Vynil>
                     <img src={imgDisc} alt="" />
@@ -50,7 +56,6 @@ export function Home() {
                 <DiscLayer>
                     {albumData.images.length > 0 && <img src={albumData.images[0].url} alt={"Cover"} />}
                 </DiscLayer>
-                <audio ref={currentAudio} src={trackData.preview_url}></audio>
 
 
             </Disc>
