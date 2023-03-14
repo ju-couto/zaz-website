@@ -23,15 +23,6 @@ export const SectionMusic = styled(Section)`
     padding-top: 0;
     margin-right: 5%;
   }
-  li {
-    
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-  }
-  hr {
-    border: 1px solid #ffffff;
-    margin: 0;
-  }
+ 
 `;
 

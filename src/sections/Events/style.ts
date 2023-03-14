@@ -5,7 +5,7 @@ import { Section } from "../../styles/global";
 export const EventsSection = styled(Section)`
   background-color: #f6cca2;
   align-items: center;
-  height: 90vh;
+  padding-bottom: 20vh;
   button {
     box-shadow: 0px 2px 0px #000000;
     cursor: pointer;

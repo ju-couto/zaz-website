@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { Concerts } from "../../utils/mockTracks";
 import { Container, Month, Icon, Dialog, Year } from "./style";
 const daysWeek = [ 'Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -23,6 +24,11 @@ export function Calendar() {
     const handleNextMonth = () => {
         setCurrentDate(new Date(year, month + 1, 1))
     }
+    // const clickDay = (day: number) => {
+    //     const clickedDay = new Date(year, month, day);
+    //     console.log(clickedDay)
+    // }
+
     return (
         <Container>
             <header>
@@ -72,7 +78,8 @@ export function Calendar() {
                     <tr>
                         {daysWeek.map((day, key) => {
                             return (
-                                <th key={key}>{day}</th>
+                                <th
+                                key={key}>{day}</th>
                             )
                         })}
                     </tr>
@@ -83,16 +90,18 @@ export function Calendar() {
                             <tr key={index}>
                                 { [...Array(7)].map((_, i) => {
                                     const day = index * 7 + i - firstDayOfMonth + 1;
+                                    const date = new Date(year, month, day);
+                                   
                                     if (day < 1 || day > daysInMonth) {
                                        
                                             return <td key={i}></td>
 
                                         
                                     } else {
-                                        if(day === 1 || day === 8|| day === 4 || day === 22 || day === 29){
-                                            return <td key={i} className="event">{day}</td>
+                                        if(Concerts.some(event => event.date.getTime() === date.getTime())){
+                                            return <td key={i}  className="event">{day}</td>
                                         } else {
-                                        return <td key={i}>{day}</td>}
+                                        return <td   key={i}>{day}</td>}
                                     }
                                 })}
                                 </tr>

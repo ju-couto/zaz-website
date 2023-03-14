@@ -1,17 +1,16 @@
 import { AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from 'react-icons/ai'
 import logo from '../../assets/logo.svg'
-import {Link} from 'react-router-dom' 
 import { ItemsNav, Menu, Navbar, SocialMedia } from './style'
 
 
 const socialMediaItems = [
     {
         icon: <AiOutlineTwitter size={20} />,
-        link: 'https://twitter.com/zazofficial'
+        link: 'https://twitter.com/Zaz_Official'
     },
     {
         icon: <AiFillInstagram size={20} />,
-        link: 'https://www.instagram.com/zazofficial/'
+        link: 'https://www.instagram.com/zaz_off/'
     },
     {
         icon: <AiFillYoutube size={20} />,
@@ -51,25 +50,17 @@ export function Header() {
                 <SocialMedia>
                     {socialMediaItems.map((item, key)  =>{
                         return (
-                            <li 
-                                    key={key}    
-                            >
+                            <li key={key} >
+                                <a href={item.link}
+                                 target="_blank"   
+                                >
                                 {item.icon}
+                                </a>
                             </li>
                         )
                     })}
                 </SocialMedia>
                 <Menu>
-                  
-                   {/* <li>
-                    <Link to="/">Home</Link>
-                   </li>
-                    <li><a href="/music">Music</a></li>
-                    <li><a href="/#events">Events</a></li>
-                    <li>
-                    <Link to="/#contact">Contact</Link>
-                    </li>
-{/*                      */}
                     {menuItems.map((item, key) => {
                         return (
                             <li
@@ -82,7 +73,6 @@ export function Header() {
                     })} 
                 </Menu>
             </ItemsNav>
-
         </Navbar>
 
     )

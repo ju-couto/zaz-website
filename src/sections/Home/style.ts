@@ -14,7 +14,7 @@ export const Disc = styled.div`
   position: absolute;
   left: 50%;
   margin-left: -27.5vh;
-  top: 15vh;
+  top: 20vh;
   img {
     position: absolute;
     width: 55vh;

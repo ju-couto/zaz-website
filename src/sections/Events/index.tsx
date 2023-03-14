@@ -18,9 +18,7 @@ export function Events() {
 
     return (
         <EventsSection
-        
         id="events">
-            
             <Title>Events</Title>
             <EventsGrid>
     

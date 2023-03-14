@@ -7,6 +7,7 @@ import { Contact } from './pages/Contact';
 import { Index } from './pages/Index';
 import { GlobalStyle } from './styles/global';
 import { Music } from './sections/Music';
+import { NotFound } from './pages/NotFound';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/" element={<Index/>} />
       <Route path="/calendar"  element={<CalendarPage/>} />
       <Route path="/contact" element={<Contact/>} /> 
+      <Route path='*' element={<NotFound/>} />
       </Routes>
       <Footer /> 
     </div>
